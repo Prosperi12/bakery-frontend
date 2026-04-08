@@ -7,7 +7,7 @@ SUPABASE_KEY = "sb_publishable_hJXHy_q1nuntSvyQa8lAiQ_zux_SwWi"
 
 headers = {
     "apikey": SUPABASE_KEY,
-    "Authorization": f"Bearer {sb_publishable_hJXHy_q1nuntSvyQa8lAiQ_zux_SwWi}"
+    "Authorization": f"Bearer {SUPABASE_KEY}"
 }
 
 st.title("🇮🇹 Luigi's Italian Bakery")
