@@ -232,6 +232,21 @@ elif st.session_state.page == "Home":
                         add_to_cart(item[0])
                         st.success(f"{item[0]} added to cart!")
 
+    st.markdown("""
+    <div style='
+        background:#6b4b3e;
+        padding:50px 40px;
+        border-radius:20px;
+        margin-top:50px;
+        color:white;
+        text-align:center;
+    '>
+        <h3 style='margin-bottom:15px;'>Working Hours</h3>
+        <p style='margin:5px 0;'>Monday - Saturday: 6:00am - 7:00pm</p>
+        <p style='margin:5px 0;'>Sunday: 6:00am - 6:00pm</p>
+    </div>
+    """, unsafe_allow_html=True)
+
 elif st.session_state.page == "Shop":
     response = requests.get(
         f"{SUPABASE_URL}/rest/v1/bakery_items?select=*",
