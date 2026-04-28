@@ -115,9 +115,53 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("""
+<style>
+.hero {
+    position: relative;
+    height: 420px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+
+.hero-overlay h1 {
+    font-size: 60px;
+    margin-bottom: 10px;
+}
+
+.hero-overlay p {
+    font-size: 22px;
+    font-style: italic;
+}
+</style>
+
 <div class="hero">
-    <h1>Luigi's Italian Bakery</h1>
-    <p>Fresh bread, pastries, cannoli, cookies, and Italian classics made daily.</p>
+    <img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec" />
+    <div class="hero-overlay">
+        <h1>Luigi's Bakery</h1>
+        <p>Don't be shy, eat some sweets!</p>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
