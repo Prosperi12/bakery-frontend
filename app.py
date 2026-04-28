@@ -23,8 +23,6 @@ st.markdown("""
 .stApp {
     background: #fff8ef;
 }
-
-/* NAV */
 .nav-btn {
     background: #111;
     color: white;
@@ -36,26 +34,19 @@ st.markdown("""
     background: #9b2f23;
     color: white;
 }
-
-/* HERO */
 .hero h1,
 .hero p {
     color: white !important;
 }
-
-/* CARDS + CONTENT TEXT */
 .card, .section-box {
     color: #111;
 }
-
 .card h3,
 .card p,
 .section-box h3,
 .section-box p {
     color: #111;
 }
-
-/* CARD STYLE */
 .card {
     background: white;
     padding: 20px;
@@ -75,16 +66,12 @@ st.markdown("""
     color: #1b5e20;
     font-weight: bold;
 }
-
-/* INFO BOX */
 .section-box {
     background: white;
     padding: 25px;
     border-radius: 18px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
-
-/* CTA */
 .cta-box h2,
 .cta-box p {
     color: white !important;
