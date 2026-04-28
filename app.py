@@ -31,26 +31,6 @@ st.markdown("""
     border-radius: 12px;
     margin-bottom: 25px;
 }
-.nav-left {
-    display: flex;
-    gap: 40px;
-}
-.nav-btn {
-    background: #111;
-    color: white;
-    border: none;
-    font-weight: 500;
-    cursor: pointer;
-}
-.nav-btn:hover {
-    color: #ffccbc;
-}
-.nav-right {
-    display: flex;
-    gap: 20px;
-    font-size: 18px;
-    color: white;
-}
 
 .card {
     background: white;
@@ -59,17 +39,29 @@ st.markdown("""
     box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     border-left: 6px solid #9b2f23;
     margin-bottom: 25px;
+    color: black;
 }
+
+.card h3 {
+    color: black;
+}
+
+.card p {
+    color: #333;
+}
+
 .price {
     font-size: 20px;
     font-weight: bold;
     color: #9b2f23;
 }
+
 .section-title {
     font-size: 28px;
     font-weight: bold;
     margin-top: 40px;
     margin-bottom: 10px;
+    color: black;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -166,16 +158,14 @@ if st.session_state.page == "Home":
     """, unsafe_allow_html=True)
 
 elif st.session_state.page == "Shop":
-
     response = requests.get(
         f"{SUPABASE_URL}/rest/v1/bakery_items?select=*",
         headers=headers
     )
-
     if response.status_code == 200:
         items = response.json()
         for item in items:
-            st.markdown(f"{item['name']} - ${item['price']}")
+            st.write(f"{item['name']} - ${item['price']}")
 
 elif st.session_state.page == "Past Cakes":
     st.markdown('<div class="section-title">Past Cakes</div>', unsafe_allow_html=True)
