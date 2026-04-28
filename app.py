@@ -156,13 +156,19 @@ st.markdown("""
 }
 </style>
 
-<div class="hero">
-    <img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec" />
-    <div class="hero-overlay">
-        <h1>Luigi's Bakery</h1>
-        <p>Don't be shy, eat some sweets!</p>
+st.markdown(f"""
+    <div style="
+        background-image: url('https://images.unsplash.com/photo-1653946402577-f2477b1002b7?auto=format&fit=crop&w=1600&q=80');
+        background-size: cover;
+        background-position: center;
+        padding: 120px 20px;
+        border-radius: 20px;
+        text-align: center;
+        color: white;
+    ">
+        <h1 style="font-size: 48px; margin-bottom: 10px;">Luigi's Italian Bakery</h1>
+        <p style="font-size: 20px;">Don’t be shy, eat some sweets 🍰</p>
     </div>
-</div>
 """, unsafe_allow_html=True)
 
 response = requests.get(
