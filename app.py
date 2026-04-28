@@ -112,12 +112,12 @@ if st.session_state.page == "Home":
     st.markdown('<div class="section-title">Featured Favorites</div>', unsafe_allow_html=True)
 
     items = [
-        ("Cannoli", "Classic ricotta filled pastry", "$2.50"),
-        ("Italian Bread", "Fresh baked daily", "$4.00"),
-        ("Chocolate Cookies", "Soft and rich chocolate cookies", "$3.00"),
-        ("Cakes", "Custom cakes for any occasion", "$25+"),
-        ("Sfogliatelle", "Flaky Italian pastry with ricotta filling", "$3.50"),
-        ("Rainbow Cookies", "Almond layered cookies with chocolate", "$2.75")
+        ("Cannoli", "Classic ricotta filled pastry", "$2.50", "Classic Italian cannoli filled with sweet ricotta cream and a crisp pastry shell."),
+        ("Italian Bread", "Fresh baked daily", "$4.00", "Fresh Italian bread baked daily with a crisp crust and soft center."),
+        ("Chocolate Cookies", "Soft and rich chocolate cookies", "$3.00", "Soft chocolate cookies made fresh with a rich, sweet flavor."),
+        ("Cakes", "Custom cakes for any occasion", "$25+", "Custom cakes made for birthdays, holidays, parties, and special events."),
+        ("Sfogliatelle", "Flaky Italian pastry with ricotta filling", "$3.50", "A flaky Italian pastry filled with sweet ricotta and citrus flavor."),
+        ("Rainbow Cookies", "Almond layered cookies with chocolate", "$2.75", "Classic Italian rainbow cookies with almond layers and chocolate.")
     ]
 
     for i in range(0, len(items), 3):
@@ -126,9 +126,8 @@ if st.session_state.page == "Home":
             if i + j < len(items):
                 item = items[i + j]
                 with cols[j]:
-                    if item[0] == "Cannoli":
-                        if st.button("View Cannoli"):
-                            st.session_state.selected_product = "Cannoli"
+                    if st.button(f"View {item[0]}", key=f"view_{item[0]}"):
+                        st.session_state.selected_product = item[0]
 
                     st.markdown(f"""
                     <div class="card">
@@ -138,20 +137,21 @@ if st.session_state.page == "Home":
                     </div>
                     """, unsafe_allow_html=True)
 
-    if st.session_state.selected_product == "Cannoli":
-        st.markdown("""
-        <div class="card">
-            <h2>Cannoli</h2>
-            <p>Classic Italian cannoli filled with sweet ricotta cream and a crisp pastry shell.</p>
-            <p class="price">$2.50</p>
-        </div>
-        """, unsafe_allow_html=True)
+    for item in items:
+        if st.session_state.selected_product == item[0]:
+            st.markdown(f"""
+            <div class="card">
+                <h2>{item[0]}</h2>
+                <p>{item[3]}</p>
+                <p class="price">{item[2]}</p>
+            </div>
+            """, unsafe_allow_html=True)
 
-        if st.button("Add Cannoli to Cart"):
-            st.success("Cannoli added to cart!")
+            if st.button(f"Add {item[0]} to Cart"):
+                st.success(f"{item[0]} added to cart!")
 
-        if st.button("Close Cannoli Details"):
-            st.session_state.selected_product = None
+            if st.button(f"Close {item[0]} Details"):
+                st.session_state.selected_product = None
 
     st.markdown('<div class="section-title">Why Choose Us</div>', unsafe_allow_html=True)
 
