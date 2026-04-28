@@ -15,8 +15,12 @@ st.set_page_config(page_title="Luigi's Italian Bakery", page_icon="🇮🇹", la
 if "page" not in st.session_state:
     st.session_state.page = "Home"
 
+if "selected_product" not in st.session_state:
+    st.session_state.selected_product = None
+
 def nav(page):
     st.session_state.page = page
+    st.session_state.selected_product = None
 
 st.markdown("""
 <style>
@@ -42,7 +46,7 @@ st.markdown("""
     color: black;
 }
 
-.card h3 {
+.card h3, .card h2 {
     color: black;
 }
 
@@ -82,7 +86,6 @@ with c3:
 with c4:
     if st.button("Contact Us"):
         nav("Contact")
-
 with c6:
     st.write("🔍 🛒")
 
@@ -123,6 +126,10 @@ if st.session_state.page == "Home":
             if i + j < len(items):
                 item = items[i + j]
                 with cols[j]:
+                    if item[0] == "Cannoli":
+                        if st.button("View Cannoli"):
+                            st.session_state.selected_product = "Cannoli"
+
                     st.markdown(f"""
                     <div class="card">
                         <h3>{item[0]}</h3>
@@ -130,6 +137,21 @@ if st.session_state.page == "Home":
                         <p class="price">{item[2]}</p>
                     </div>
                     """, unsafe_allow_html=True)
+
+    if st.session_state.selected_product == "Cannoli":
+        st.markdown("""
+        <div class="card">
+            <h2>Cannoli</h2>
+            <p>Classic Italian cannoli filled with sweet ricotta cream and a crisp pastry shell.</p>
+            <p class="price">$2.50</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button("Add Cannoli to Cart"):
+            st.success("Cannoli added to cart!")
+
+        if st.button("Close Cannoli Details"):
+            st.session_state.selected_product = None
 
     st.markdown('<div class="section-title">Why Choose Us</div>', unsafe_allow_html=True)
 
@@ -162,6 +184,7 @@ elif st.session_state.page == "Shop":
         f"{SUPABASE_URL}/rest/v1/bakery_items?select=*",
         headers=headers
     )
+
     if response.status_code == 200:
         items = response.json()
         for item in items:
