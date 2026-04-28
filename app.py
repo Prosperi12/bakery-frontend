@@ -23,21 +23,10 @@ st.markdown("""
 .stApp {
     background: #fff8ef;
 }
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #111;
-    padding: 15px 40px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-}
-.nav-left {
-    display: flex;
-    gap: 40px;
-}
+
+/* NAV */
 .nav-btn {
-    background: #222;
+    background: #111;
     color: white;
     padding: 8px 18px;
     border-radius: 10px;
@@ -47,31 +36,26 @@ st.markdown("""
     background: #9b2f23;
     color: white;
 }
-.nav-right {
-    color: white;
-    font-size: 20px;
+
+/* HERO */
+.hero h1,
+.hero p {
+    color: white !important;
 }
-h1, h2, h3, p, label {
-    color: #111 !important;
+
+/* CARDS + CONTENT TEXT */
+.card, .section-box {
+    color: #111;
 }
+
 .card h3,
 .card p,
 .section-box h3,
 .section-box p {
-    color: #111 !important;
+    color: #111;
 }
-[data-testid="stMarkdownContainer"] {
-    color: #111 !important;
-}
-.hero {
-    background-size: cover;
-    background-position: center;
-    padding: 120px 20px;
-    border-radius: 20px;
-    text-align: center;
-    color: white;
-    margin-bottom: 40px;
-}
+
+/* CARD STYLE */
 .card {
     background: white;
     padding: 20px;
@@ -91,12 +75,16 @@ h1, h2, h3, p, label {
     color: #1b5e20;
     font-weight: bold;
 }
+
+/* INFO BOX */
 .section-box {
     background: white;
     padding: 25px;
     border-radius: 18px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
+
+/* CTA */
 .cta-box h2,
 .cta-box p {
     color: white !important;
@@ -127,9 +115,15 @@ if st.session_state.page == "Home":
     <div class="hero" style="
         background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
         url('https://images.unsplash.com/photo-1653946402577-f2477b1002b7?auto=format&fit=crop&w=1600&q=80');
+        background-size: cover;
+        background-position: center;
+        padding: 120px 20px;
+        border-radius: 20px;
+        text-align: center;
+        margin-bottom: 40px;
     ">
-        <h1 style="font-size:56px; color:white;">Luigi's Italian Bakery</h1>
-        <p style="font-size:22px; color:white;">Don’t be shy, eat some sweets 🍰</p>
+        <h1 style="font-size:56px;">Luigi's Italian Bakery</h1>
+        <p style="font-size:22px;">Don’t be shy, eat some sweets 🍰</p>
     </div>
     """, unsafe_allow_html=True)
 
