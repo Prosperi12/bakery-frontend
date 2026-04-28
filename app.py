@@ -157,7 +157,7 @@ st.markdown("""
 </style>
 
 st.markdown(f"""
-    <div style="
+    <div style=
         background-image: url('https://images.unsplash.com/photo-1653946402577-f2477b1002b7?auto=format&fit=crop&w=1600&q=80');
         background-size: cover;
         background-position: center;
