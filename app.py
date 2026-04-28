@@ -20,33 +20,38 @@ def nav(page):
 
 st.markdown("""
 <style>
-.stApp {
-    background: #fff8ef;
+.stApp { background: #fff8ef; }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #111;
+    padding: 15px 40px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+.nav-left {
+    display: flex;
+    gap: 40px;
 }
 .nav-btn {
     background: #111;
     color: white;
-    padding: 8px 18px;
-    border-radius: 10px;
     border: none;
+    font-weight: 500;
+    cursor: pointer;
 }
 .nav-btn:hover {
-    background: #9b2f23;
+    color: #ffccbc;
+}
+.nav-right {
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
     color: white;
 }
-.hero h1,
-.hero p {
-    color: white !important;
-}
-.card, .section-box {
-    color: #111;
-}
-.card h3,
-.card p,
-.section-box h3,
-.section-box p {
-    color: #111;
-}
+
 .card {
     background: white;
     padding: 20px;
@@ -59,27 +64,17 @@ st.markdown("""
     font-weight: bold;
     color: #9b2f23;
 }
-.badge {
-    padding: 6px 12px;
-    border-radius: 999px;
-    background: #e8f5e9;
-    color: #1b5e20;
+.section-title {
+    font-size: 28px;
     font-weight: bold;
-}
-.section-box {
-    background: white;
-    padding: 25px;
-    border-radius: 18px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-.cta-box h2,
-.cta-box p {
-    color: white !important;
+    margin-top: 30px;
 }
 </style>
 """, unsafe_allow_html=True)
 
-col1, col2, col3, col4, col5 = st.columns([1,1,1,1,2])
+st.markdown('<div class="navbar">', unsafe_allow_html=True)
+
+col1, col2, col3, col4, col5, col6 = st.columns([1,1,1,1,4,1])
 
 with col1:
     if st.button("Home"):
@@ -93,42 +88,45 @@ with col3:
 with col4:
     if st.button("Contact Us"):
         nav("Contact")
-with col5:
-    st.markdown("<div style='text-align:right;font-size:20px;'>🔍 🛒</div>", unsafe_allow_html=True)
+
+with col6:
+    st.write("🔍 🛒")
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 if st.session_state.page == "Home":
 
-    st.markdown(f"""
-    <div class="hero" style="
-        background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
-        url('https://images.unsplash.com/photo-1653946402577-f2477b1002b7?auto=format&fit=crop&w=1600&q=80');
+    st.markdown("""
+    <div style='
+        background-image: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("https://images.unsplash.com/photo-1653946402577-f2477b1002b7?auto=format&fit=crop&w=1600&q=80");
         background-size: cover;
         background-position: center;
         padding: 120px 20px;
         border-radius: 20px;
         text-align: center;
+        color: white;
         margin-bottom: 40px;
-    ">
-        <h1 style="font-size:56px;">Luigi's Italian Bakery</h1>
-        <p style="font-size:22px;">Don’t be shy, eat some sweets 🍰</p>
+    '>
+        <h1 style="font-size: 56px;">Luigi's Italian Bakery</h1>
+        <p style="font-size: 22px; font-style: italic;">Don’t be shy, eat some sweets 🍰</p>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("## Welcome")
-    st.markdown("Fresh Italian bread, pastries, cookies, cakes, and bakery classics made daily.")
-
-    st.markdown("### Featured Favorites")
+    st.markdown('<div class="section-title">Featured Favorites</div>', unsafe_allow_html=True)
 
     cols = st.columns(3)
 
-    demo_items = [
+    items = [
         ("Cannoli", "Classic ricotta filled pastry", "$2.50"),
         ("Italian Bread", "Fresh baked daily", "$4.00"),
-        ("Chocolate Cookies", "Soft and rich chocolate cookies", "$3.00")
+        ("Chocolate Cookies", "Soft and rich chocolate cookies", "$3.00"),
+        ("Cakes", "Custom cakes for any occasion", "$25+"),
+        ("Sfogliatelle", "Flaky Italian pastry with ricotta filling", "$3.50"),
+        ("Rainbow Cookies", "Almond layered cookies with chocolate", "$2.75")
     ]
 
-    for i, item in enumerate(demo_items):
-        with cols[i]:
+    for i, item in enumerate(items):
+        with cols[i % 3]:
             st.markdown(f"""
             <div class="card">
                 <h3>{item[0]}</h3>
@@ -137,9 +135,9 @@ if st.session_state.page == "Home":
             </div>
             """, unsafe_allow_html=True)
 
-    st.markdown("### Why Choose Us")
+    st.markdown('<div class="section-title">Why Choose Us</div>', unsafe_allow_html=True)
 
-    cols = st.columns(3)
+    cols2 = st.columns(3)
 
     features = [
         ("🍞 Fresh Daily", "Baked fresh every morning"),
@@ -148,22 +146,16 @@ if st.session_state.page == "Home":
     ]
 
     for i, f in enumerate(features):
-        with cols[i]:
+        with cols2[i]:
             st.markdown(f"""
-            <div class="section-box">
+            <div class="card">
                 <h3>{f[0]}</h3>
                 <p>{f[1]}</p>
             </div>
             """, unsafe_allow_html=True)
 
     st.markdown("""
-    <div class="cta-box" style="
-        background:#111;
-        padding:40px;
-        border-radius:20px;
-        text-align:center;
-        margin-top:40px;
-    ">
+    <div style='background:#111; padding:40px; border-radius:20px; text-align:center; margin-top:40px; color:white;'>
         <h2>Ready to Order?</h2>
         <p>Visit our shop page to browse fresh bakery items.</p>
     </div>
@@ -171,58 +163,24 @@ if st.session_state.page == "Home":
 
 elif st.session_state.page == "Shop":
 
-    st.title("Shop Our Bakery")
-
     response = requests.get(
-        f"{SUPABASE_URL}/rest/v1/bakery_items?select=*&order=id.desc",
+        f"{SUPABASE_URL}/rest/v1/bakery_items?select=*",
         headers=headers
     )
 
-    items = response.json() if response.status_code == 200 else []
-
-    categories = ["All"] + list(set([item["category"] for item in items if item.get("category")]))
-    selected = st.selectbox("Filter by category", categories)
-
-    filtered = items if selected == "All" else [i for i in items if i["category"] == selected]
-
-    cols = st.columns(3)
-
-    for i, item in enumerate(filtered):
-        with cols[i % 3]:
-            if item.get("image_url"):
-                st.image(item["image_url"], use_container_width=True)
-
-            st.markdown(f"""
-            <div class="card">
-                <h3>{item.get("name","")}</h3>
-                <p>{item.get("description","")}</p>
-                <p class="price">${item.get("price",0)}</p>
-                <span class="badge">Available</span>
-            </div>
-            """, unsafe_allow_html=True)
+    if response.status_code == 200:
+        items = response.json()
+        for item in items:
+            st.markdown(f"{item['name']} - ${item['price']}")
 
 elif st.session_state.page == "Past Cakes":
 
-    st.title("Our Past Cakes")
-
-    cols = st.columns(3)
-    for i in range(3):
-        with cols[i]:
-            st.markdown("""
-            <div class="section-box">
-                Cake photo coming soon
-            </div>
-            """, unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Past Cakes</div>', unsafe_allow_html=True)
+    st.write("Cake gallery coming soon")
 
 elif st.session_state.page == "Contact":
 
-    st.title("Contact Us")
-
-    st.markdown("""
-    <div class="section-box">
-        <p>📍 Lynbrook, NY</p>
-        <p>📞 Phone coming soon</p>
-        <p>📧 Email coming soon</p>
-        <p>🕒 Hours coming soon</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Contact Us</div>', unsafe_allow_html=True)
+    st.write("Lynbrook, NY")
+    st.write("Phone coming soon")
+    st.write("Email coming soon")
