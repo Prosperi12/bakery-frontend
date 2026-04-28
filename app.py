@@ -18,9 +18,20 @@ if "page" not in st.session_state:
 if "selected_product" not in st.session_state:
     st.session_state.selected_product = None
 
+if "cart" not in st.session_state:
+    st.session_state.cart = {}
+
 def nav(page):
     st.session_state.page = page
     st.session_state.selected_product = None
+
+def add_to_cart(product):
+    if product in st.session_state.cart:
+        st.session_state.cart[product] += 1
+    else:
+        st.session_state.cart[product] = 1
+
+cart_count = sum(st.session_state.cart.values())
 
 st.markdown("""
 <style>
@@ -87,7 +98,7 @@ with c4:
     if st.button("Contact Us"):
         nav("Contact")
 with c6:
-    st.write("🔍 🛒")
+    st.write(f"🔍 🛒 {cart_count}")
 
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -148,6 +159,7 @@ if st.session_state.page == "Home":
             """, unsafe_allow_html=True)
 
             if st.button(f"Add {item[0]} to Cart"):
+                add_to_cart(item[0])
                 st.success(f"{item[0]} added to cart!")
 
             if st.button(f"Close {item[0]} Details"):
