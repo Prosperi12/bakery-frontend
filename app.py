@@ -14,6 +14,54 @@ st.set_page_config(page_title="Luigi's Italian Bakery", page_icon="🇮🇹", la
 
 st.markdown("""
 <style>
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #111;
+    padding: 15px 30px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.nav-left {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-item {
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    color: #ffccbc;
+}
+
+.nav-right {
+    display: flex;
+    gap: 20px;
+    font-size: 18px;
+    color: white;
+}
+</style>
+
+<div class="navbar">
+    <div class="nav-left">
+        <div class="nav-item">Home</div>
+        <div class="nav-item">Shop</div>
+        <div class="nav-item">Past Cakes</div>
+        <div class="nav-item">Contact Us</div>
+    </div>
+    <div class="nav-right">
+        🔍 🛒
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<style>
 .stApp {
     background: #fff8ef;
 }
