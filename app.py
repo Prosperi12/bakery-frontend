@@ -44,6 +44,7 @@ div.stButton > button:hover {
     border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     border-left: 5px solid #9b2f23;
+    min-height: 210px;
 }
 .price {
     font-size: 22px;
@@ -66,6 +67,13 @@ div.stButton > button:hover {
     padding: 25px;
     border-radius: 18px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+.section-box {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -101,6 +109,59 @@ response = requests.get(
 
 items = response.json() if response.status_code == 200 else []
 
+sample_items = [
+    {
+        "name": "Cannoli",
+        "category": "Pastry",
+        "price": 4.50,
+        "description": "Classic Sicilian cannoli filled with sweet ricotta cream.",
+        "available": True,
+        "image_url": ""
+    },
+    {
+        "name": "Italian Bread",
+        "category": "Bread",
+        "price": 5.00,
+        "description": "Fresh baked Italian bread with a crisp crust and soft center.",
+        "available": True,
+        "image_url": ""
+    },
+    {
+        "name": "Rainbow Cookies",
+        "category": "Cookies",
+        "price": 14.99,
+        "description": "Traditional Italian rainbow cookies with almond flavor and chocolate.",
+        "available": True,
+        "image_url": ""
+    },
+    {
+        "name": "Sfogliatelle",
+        "category": "Pastry",
+        "price": 4.75,
+        "description": "Flaky Italian pastry with a sweet ricotta and citrus filling.",
+        "available": True,
+        "image_url": ""
+    },
+    {
+        "name": "Pignoli Cookies",
+        "category": "Cookies",
+        "price": 18.99,
+        "description": "Soft almond cookies covered with pine nuts.",
+        "available": True,
+        "image_url": ""
+    },
+    {
+        "name": "Custom Cake",
+        "category": "Cakes",
+        "price": 35.00,
+        "description": "Fresh custom cakes made for birthdays, holidays, and special events.",
+        "available": True,
+        "image_url": ""
+    }
+]
+
+display_items = items if len(items) > 0 else sample_items
+
 if st.session_state.page == "home":
     st.markdown("""
     <div style='
@@ -121,14 +182,75 @@ if st.session_state.page == "home":
     st.subheader("Welcome")
     st.write("Fresh Italian bread, pastries, cookies, cakes, and bakery classics made daily.")
 
+    st.subheader("Featured Favorites")
+
+    featured = display_items[:3]
+    cols = st.columns(3)
+
+    for i, item in enumerate(featured):
+        with cols[i]:
+            st.markdown(f"""
+            <div class="card">
+                <h3>{item.get("name", "")}</h3>
+                <p><b>{item.get("category", "")}</b></p>
+                <p>{item.get("description", "")}</p>
+                <p class="price">${float(item.get("price", 0)):.2f}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+    st.markdown("### Why Choose Us")
+
+    c1, c2, c3 = st.columns(3)
+
+    with c1:
+        st.markdown("""
+        <div class="section-box">
+            <h3>🍞 Fresh Daily</h3>
+            <p>Our bread, pastries, and cookies are baked fresh every morning.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c2:
+        st.markdown("""
+        <div class="section-box">
+            <h3>🇮🇹 Italian Tradition</h3>
+            <p>Classic Italian bakery favorites made with family-style recipes.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c3:
+        st.markdown("""
+        <div class="section-box">
+            <h3>🎂 Custom Orders</h3>
+            <p>We make cakes and trays for birthdays, holidays, parties, and events.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div style='
+        background:#111;
+        color:white;
+        padding:40px;
+        border-radius:16px;
+        text-align:center;
+        margin-top:25px;
+    '>
+        <h2>Ready to Order?</h2>
+        <p>Visit our shop page to browse fresh bakery items.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if st.button("Go to Shop"):
+        st.session_state.page = "shop"
+
 if st.session_state.page == "shop":
     st.subheader("Our Menu")
 
-    categories = ["All"] + sorted(list(set([item["category"] for item in items if item.get("category")])))
+    categories = ["All"] + sorted(list(set([item["category"] for item in display_items if item.get("category")])))
     selected_category = st.selectbox("Filter by category", categories)
 
-    filtered_items = items if selected_category == "All" else [
-        item for item in items if item.get("category") == selected_category
+    filtered_items = display_items if selected_category == "All" else [
+        item for item in display_items if item.get("category") == selected_category
     ]
 
     cols = st.columns(3)
@@ -146,7 +268,7 @@ if st.session_state.page == "shop":
                 <h3>{item.get("name", "")}</h3>
                 <p><b>{item.get("category", "")}</b></p>
                 <p>{item.get("description", "")}</p>
-                <p class="price">${item.get("price", 0)}</p>
+                <p class="price">${float(item.get("price", 0)):.2f}</p>
                 <span class="{available_class}">{available_text}</span>
             </div>
             """, unsafe_allow_html=True)
