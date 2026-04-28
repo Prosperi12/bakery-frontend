@@ -21,6 +21,9 @@ if "selected_product" not in st.session_state:
 if "cart" not in st.session_state:
     st.session_state.cart = {}
 
+if "search_query" not in st.session_state:
+    st.session_state.search_query = ""
+
 def nav(page):
     st.session_state.page = page
     st.session_state.selected_product = None
@@ -83,7 +86,7 @@ st.markdown("""
 
 st.markdown('<div class="navbar">', unsafe_allow_html=True)
 
-c1, c2, c3, c4, c5, c6 = st.columns([1,1,1,1,4,1])
+c1, c2, c3, c4, c5, c6, c7 = st.columns([1,1,1,1,4,1,1])
 
 with c1:
     if st.button("Home"):
@@ -98,11 +101,36 @@ with c4:
     if st.button("Contact Us"):
         nav("Contact")
 with c6:
-    st.write(f"🔍 🛒 {cart_count}")
+    if st.button("🔍"):
+        nav("Search")
+with c7:
+    if st.button(f"🛒 {cart_count}"):
+        nav("Cart")
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-if st.session_state.page == "Home":
+if st.session_state.page == "Search":
+    st.markdown('<div class="section-title">Search</div>', unsafe_allow_html=True)
+    query = st.text_input("Search items", value=st.session_state.search_query)
+    st.session_state.search_query = query
+
+    items = ["Cannoli", "Italian Bread", "Chocolate Cookies", "Cakes", "Sfogliatelle", "Rainbow Cookies"]
+
+    results = [i for i in items if query.lower() in i.lower()]
+
+    for r in results:
+        st.markdown(f"<div class='card'><h3>{r}</h3></div>", unsafe_allow_html=True)
+
+elif st.session_state.page == "Cart":
+    st.markdown('<div class="section-title">Your Cart</div>', unsafe_allow_html=True)
+
+    if not st.session_state.cart:
+        st.write("Cart is empty")
+    else:
+        for item, qty in st.session_state.cart.items():
+            st.markdown(f"<div class='card'><h3>{item}</h3><p>Quantity: {qty}</p></div>", unsafe_allow_html=True)
+
+elif st.session_state.page == "Home":
 
     st.markdown("""
     <div style='
@@ -123,12 +151,12 @@ if st.session_state.page == "Home":
     st.markdown('<div class="section-title">Featured Favorites</div>', unsafe_allow_html=True)
 
     items = [
-        ("Cannoli", "Classic ricotta filled pastry", "$2.50", "Classic Italian cannoli filled with sweet ricotta cream and a crisp pastry shell."),
-        ("Italian Bread", "Fresh baked daily", "$4.00", "Fresh Italian bread baked daily with a crisp crust and soft center."),
-        ("Chocolate Cookies", "Soft and rich chocolate cookies", "$3.00", "Soft chocolate cookies made fresh with a rich, sweet flavor."),
-        ("Cakes", "Custom cakes for any occasion", "$25+", "Custom cakes made for birthdays, holidays, parties, and special events."),
-        ("Sfogliatelle", "Flaky Italian pastry with ricotta filling", "$3.50", "A flaky Italian pastry filled with sweet ricotta and citrus flavor."),
-        ("Rainbow Cookies", "Almond layered cookies with chocolate", "$2.75", "Classic Italian rainbow cookies with almond layers and chocolate.")
+        ("Cannoli", "Classic ricotta filled pastry", "$2.50"),
+        ("Italian Bread", "Fresh baked daily", "$4.00"),
+        ("Chocolate Cookies", "Soft and rich chocolate cookies", "$3.00"),
+        ("Cakes", "Custom cakes for any occasion", "$25+"),
+        ("Sfogliatelle", "Flaky Italian pastry with ricotta filling", "$3.50"),
+        ("Rainbow Cookies", "Almond layered cookies with chocolate", "$2.75")
     ]
 
     for i in range(0, len(items), 3):
@@ -137,9 +165,6 @@ if st.session_state.page == "Home":
             if i + j < len(items):
                 item = items[i + j]
                 with cols[j]:
-                    if st.button(f"View {item[0]}", key=f"view_{item[0]}"):
-                        st.session_state.selected_product = item[0]
-
                     st.markdown(f"""
                     <div class="card">
                         <h3>{item[0]}</h3>
@@ -148,48 +173,9 @@ if st.session_state.page == "Home":
                     </div>
                     """, unsafe_allow_html=True)
 
-    for item in items:
-        if st.session_state.selected_product == item[0]:
-            st.markdown(f"""
-            <div class="card">
-                <h2>{item[0]}</h2>
-                <p>{item[3]}</p>
-                <p class="price">{item[2]}</p>
-            </div>
-            """, unsafe_allow_html=True)
-
-            if st.button(f"Add {item[0]} to Cart"):
-                add_to_cart(item[0])
-                st.success(f"{item[0]} added to cart!")
-
-            if st.button(f"Close {item[0]} Details"):
-                st.session_state.selected_product = None
-
-    st.markdown('<div class="section-title">Why Choose Us</div>', unsafe_allow_html=True)
-
-    cols2 = st.columns(3, gap="large")
-
-    features = [
-        ("🍞 Fresh Daily", "Baked fresh every morning"),
-        ("🇮🇹 Italian Tradition", "Family recipes passed down"),
-        ("🎂 Custom Orders", "Cakes for any event")
-    ]
-
-    for i, f in enumerate(features):
-        with cols2[i]:
-            st.markdown(f"""
-            <div class="card">
-                <h3>{f[0]}</h3>
-                <p>{f[1]}</p>
-            </div>
-            """, unsafe_allow_html=True)
-
-    st.markdown("""
-    <div style='background:#111; padding:40px; border-radius:20px; text-align:center; margin-top:40px; color:white;'>
-        <h2>Ready to Order?</h2>
-        <p>Visit our shop page to browse fresh bakery items.</p>
-    </div>
-    """, unsafe_allow_html=True)
+                    if st.button(f"Add {item[0]}", key=item[0]):
+                        add_to_cart(item[0])
+                        st.success(f"{item[0]} added")
 
 elif st.session_state.page == "Shop":
     response = requests.get(
