@@ -36,6 +36,12 @@ st.markdown("""
     margin-bottom: 25px;
 }
 
+button[kind="secondary"] {
+    background: transparent !important;
+    border: none !important;
+    height: 180px;
+}
+
 .card {
     background: white;
     padding: 25px;
@@ -126,8 +132,9 @@ if st.session_state.page == "Home":
             if i + j < len(items):
                 item = items[i + j]
                 with cols[j]:
+
                     if item[0] == "Cannoli":
-                        if st.button("View Cannoli"):
+                        if st.button("", key="cannoli_click", use_container_width=True):
                             st.session_state.selected_product = "Cannoli"
 
                     st.markdown(f"""
