@@ -34,6 +34,21 @@ def add_to_cart(product):
     else:
         st.session_state.cart[product] = 1
 
+def remove_one(product):
+    if product in st.session_state.cart:
+        st.session_state.cart[product] -= 1
+        if st.session_state.cart[product] <= 0:
+            del st.session_state.cart[product]
+
+product_prices = {
+    "Cannoli": 2.50,
+    "Italian Bread": 4.00,
+    "Chocolate Cookies": 3.00,
+    "Cakes": 25.00,
+    "Sfogliatelle": 3.50,
+    "Rainbow Cookies": 2.75
+}
+
 cart_count = sum(st.session_state.cart.values())
 
 st.markdown("""
@@ -115,11 +130,13 @@ if st.session_state.page == "Search":
     st.session_state.search_query = query
 
     items = ["Cannoli", "Italian Bread", "Chocolate Cookies", "Cakes", "Sfogliatelle", "Rainbow Cookies"]
-
     results = [i for i in items if query.lower() in i.lower()]
 
     for r in results:
-        st.markdown(f"<div class='card'><h3>{r}</h3></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='card'><h3>{r}</h3><p class='price'>${product_prices[r]:.2f}</p></div>", unsafe_allow_html=True)
+        if st.button(f"Add {r} to Cart", key=f"search_add_{r}"):
+            add_to_cart(r)
+            st.success(f"{r} added to cart!")
 
 elif st.session_state.page == "Cart":
     st.markdown('<div class="section-title">Your Cart</div>', unsafe_allow_html=True)
@@ -127,8 +144,46 @@ elif st.session_state.page == "Cart":
     if not st.session_state.cart:
         st.write("Cart is empty")
     else:
-        for item, qty in st.session_state.cart.items():
-            st.markdown(f"<div class='card'><h3>{item}</h3><p>Quantity: {qty}</p></div>", unsafe_allow_html=True)
+        total = 0
+
+        for item, qty in list(st.session_state.cart.items()):
+            price = product_prices.get(item, 0)
+            subtotal = price * qty
+            total += subtotal
+
+            st.markdown(f"""
+            <div class="card">
+                <h2>{item}</h2>
+                <p class="price">${price:.2f}</p>
+                <p>Quantity: {qty}</p>
+                <p><b>Subtotal:</b> ${subtotal:.2f}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            minus_col, qty_col, plus_col = st.columns([1, 1, 1])
+
+            with minus_col:
+                if st.button("−", key=f"minus_{item}"):
+                    remove_one(item)
+                    st.rerun()
+
+            with qty_col:
+                st.markdown(f"<h3 style='text-align:center;'>{qty}</h3>", unsafe_allow_html=True)
+
+            with plus_col:
+                if st.button("+", key=f"plus_{item}"):
+                    add_to_cart(item)
+                    st.rerun()
+
+        st.markdown(f"""
+        <div class="card">
+            <h2>Cart Total</h2>
+            <p class="price">${total:.2f}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button("Checkout"):
+            st.success("Checkout coming soon!")
 
 elif st.session_state.page == "Home":
 
@@ -175,7 +230,7 @@ elif st.session_state.page == "Home":
 
                     if st.button(f"Add {item[0]}", key=item[0]):
                         add_to_cart(item[0])
-                        st.success(f"{item[0]} added")
+                        st.success(f"{item[0]} added to cart!")
 
 elif st.session_state.page == "Shop":
     response = requests.get(
