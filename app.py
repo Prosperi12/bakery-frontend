@@ -251,7 +251,10 @@ elif st.session_state.page == "Shop":
         col1, col2 = st.columns([1,2])
 
         with col1:
-            st.image(item[2], use_container_width=True)
+            try:
+                st.image(item[2], use_container_width=True)
+            except:
+                st.empty()
 
         with col2:
             st.markdown(f"""
