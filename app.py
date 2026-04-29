@@ -109,7 +109,7 @@ with c7:
     if st.button(f"🛒 {cart_count}"):
         nav("Cart")
 
-elif st.session_state.page == "Shop":
+    elif st.session_state.page == "Shop":
 
     st.markdown('<div class="section-title">Shop</div>', unsafe_allow_html=True)
 
