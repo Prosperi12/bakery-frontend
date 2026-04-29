@@ -66,7 +66,7 @@ st.markdown("""
     border-radius: 18px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     border-left: 6px solid #9b2f23;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     color: black;
 }
 .card h2, .card h3, .card p {
@@ -229,45 +229,57 @@ elif st.session_state.page == "Shop":
     st.markdown('<div class="section-title">Shop</div>', unsafe_allow_html=True)
 
     shop_items = [
-        ("Cannoli", "Classic ricotta filled pastry", "images/cannoli.jpg"),
-        ("Italian Bread", "Fresh baked daily", "images/bread.jpg"),
-        ("Chocolate Cookies", "Soft and rich chocolate cookies", "images/cookies.jpg"),
-        ("Cakes", "Custom cakes for any occasion", "images/cake.jpg"),
-        ("Sfogliatelle", "Flaky Italian pastry with ricotta filling", "images/sfoglia.jpg"),
-        ("Rainbow Cookies", "Almond layered cookies with chocolate", "images/rainbow.jpg"),
-        ("Pignoli Cookies", "Almond cookies topped with pine nuts", "images/pignoli.jpg"),
-        ("Anisette Cookies", "Soft cookies with light anise flavor", "images/ani.webp"),
-        ("Almond Biscotti", "Crunchy almond twice-baked cookies", "images/almond.jpg"),
-        ("Linzertarts", "Raspberry filled shortbread tart", "images/linzer.jpg"),
-        ("Black and White Cookie", "Classic half chocolate half vanilla", "images/black.webp"),
-        ("Apple Turnover", "Flaky pastry filled with apple", "images/turnover.jpg"),
-        ("Cheese Danish", "Sweet cheese pastry", "images/danish.jpg"),
-        ("Tiramisu", "Coffee layered dessert", "images/tiramisu.webp"),
-        ("Cream Puff", "Pastry filled with cream", "images/creampuff.jpg"),
-        ("Eclair", "Chocolate topped cream pastry", "images/eclairs.avif")
+        ("Cannoli", "Classic ricotta filled pastry"),
+        ("Italian Bread", "Fresh baked daily"),
+        ("Chocolate Cookies", "Soft and rich chocolate cookies"),
+        ("Cakes", "Custom cakes for any occasion"),
+        ("Sfogliatelle", "Flaky Italian pastry with ricotta filling"),
+        ("Rainbow Cookies", "Almond layered cookies with chocolate"),
+        ("Pignoli Cookies", "Almond cookies topped with pine nuts"),
+        ("Anisette Cookies", "Soft cookies with light anise flavor"),
+        ("Almond Biscotti", "Crunchy almond twice-baked cookies"),
+        ("Linzertarts", "Raspberry filled shortbread tart"),
+        ("Black and White Cookie", "Classic half chocolate half vanilla"),
+        ("Apple Turnover", "Flaky pastry filled with apple"),
+        ("Cheese Danish", "Sweet cheese pastry"),
+        ("Tiramisu", "Coffee layered dessert"),
+        ("Cream Puff", "Pastry filled with cream"),
+        ("Eclair", "Chocolate topped cream pastry")
     ]
 
     for item in shop_items:
-        col1, col2 = st.columns([1,2])
+        name = item[0]
+        description = item[1]
+        qty = st.session_state.cart.get(name, 0)
 
-        with col1:
-            try:
-                st.image(item[2], use_container_width=True)
-            except:
-                st.empty()
+        st.markdown(f"""
+        <div class="card">
+            <h2>{name}</h2>
+            <p>{description}</p>
+            <p class="price">${product_prices[name]:.2f}</p>
+            <p><b>Quantity selected:</b> {qty}</p>
+        </div>
+        """, unsafe_allow_html=True)
 
-        with col2:
-            st.markdown(f"""
-            <div class="card">
-                <h2>{item[0]}</h2>
-                <p>{item[1]}</p>
-                <p class="price">${product_prices[item[0]]:.2f}</p>
-            </div>
-            """, unsafe_allow_html=True)
+        minus_col, qty_col, plus_col, add_col = st.columns([1,1,1,2])
 
-            if st.button(f"Add {item[0]}", key=f"shop_{item[0]}"):
-                add_to_cart(item[0])
-                st.success(f"{item[0]} added to cart!")
+        with minus_col:
+            if st.button("−", key=f"shop_minus_{name}"):
+                remove_one(name)
+                st.rerun()
+
+        with qty_col:
+            st.markdown(f"<h3 style='text-align:center;'>{qty}</h3>", unsafe_allow_html=True)
+
+        with plus_col:
+            if st.button("+", key=f"shop_plus_{name}"):
+                add_to_cart(name)
+                st.rerun()
+
+        with add_col:
+            if st.button(f"Add {name}", key=f"shop_add_{name}"):
+                add_to_cart(name)
+                st.success(f"{name} added to cart!")
 
 elif st.session_state.page == "Past Cakes":
     st.markdown('<div class="section-title">Past Cakes</div>', unsafe_allow_html=True)
