@@ -91,7 +91,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-c1, c2, c3, c4, c5, c6, c7 = st.columns([1,1,1,1,4,1,1])
+c1, c2, c3, c4, c5, c6 = st.columns([1,1,1,4,1,1])
 
 with c1:
     if st.button("Home"):
@@ -100,15 +100,12 @@ with c2:
     if st.button("Shop"):
         nav("Shop")
 with c3:
-    if st.button("Past Cakes"):
-        nav("Past Cakes")
-with c4:
     if st.button("Contact Us"):
         nav("Contact")
-with c6:
+with c5:
     if st.button("🔍"):
         nav("Search")
-with c7:
+with c6:
     if st.button(f"🛒 {cart_count}"):
         nav("Cart")
 
@@ -163,7 +160,15 @@ elif st.session_state.page == "Cart":
                     add_to_cart(item)
                     st.rerun()
 
-        st.markdown(f"<h2>Total: ${total:.2f}</h2>", unsafe_allow_html=True)
+        st.markdown(f"""
+        <div class="card">
+            <h2>Order Total</h2>
+            <p class="price">${total:.2f}</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button(f"Checkout - ${total:.2f}"):
+            st.success(f"Checkout started. Final total: ${total:.2f}")
 
 elif st.session_state.page == "Home":
     st.markdown("""
@@ -280,10 +285,6 @@ elif st.session_state.page == "Shop":
             if st.button(f"Add {name}", key=f"shop_add_{name}"):
                 add_to_cart(name)
                 st.success(f"{name} added to cart!")
-
-elif st.session_state.page == "Past Cakes":
-    st.markdown('<div class="section-title">Past Cakes</div>', unsafe_allow_html=True)
-    st.write("Cake gallery coming soon")
 
 elif st.session_state.page == "Contact":
     st.markdown('<div class="section-title">Contact Us</div>', unsafe_allow_html=True)
