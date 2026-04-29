@@ -60,15 +60,6 @@ cart_count = sum(st.session_state.cart.values())
 st.markdown("""
 <style>
 .stApp { background: #fff8ef; }
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #111;
-    padding: 15px 40px;
-    border-radius: 12px;
-    margin-bottom: 25px;
-}
 .card {
     background: white;
     padding: 25px;
@@ -115,7 +106,6 @@ with c7:
         nav("Cart")
 
 if st.session_state.page == "Shop":
-
     st.markdown('<div class="section-title">Shop</div>', unsafe_allow_html=True)
 
     items = [
@@ -193,7 +183,23 @@ elif st.session_state.page == "Cart":
         st.markdown(f"<h2>Total: ${total:.2f}</h2>", unsafe_allow_html=True)
 
 elif st.session_state.page == "Home":
-    st.markdown("<h1>Home</h1>", unsafe_allow_html=True)
+    st.markdown("""
+    <div style="color:black; padding:40px;">
+        <h1 style="font-size:48px;">Luigi's Italian Bakery</h1>
+        <p style="font-size:22px;">Fresh Italian bread, pastries, cookies, and custom cakes made daily.</p>
+
+        <div class="card">
+            <h2>Welcome</h2>
+            <p>Shop our bakery favorites, view past cakes, or contact us for custom orders.</p>
+        </div>
+
+        <div class="card">
+            <h2>Hours</h2>
+            <p>Monday - Saturday: 6 AM - 7 PM</p>
+            <p>Sunday: 6 AM - 6 PM</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 elif st.session_state.page == "Past Cakes":
     st.write("Past cakes coming soon")
