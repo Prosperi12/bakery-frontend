@@ -315,7 +315,7 @@ elif st.session_state.page == "Contact":
         </div>
         """, unsafe_allow_html=True)
 
-    with col2:
+   with col2:
     st.markdown("""
     <div class="card">
         <h3>... OR CONTACT US DIRECTLY</h3>
