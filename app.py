@@ -325,7 +325,7 @@ elif st.session_state.page == "Contact":
     <p>Luigi’s Bakery is dedicated to making your experience smooth and simple. Whether you're ordering desserts or planning something special, we're here to help.</p>
 
     <p><b>📞 Phone:</b> 493-489-2933</p>
-    <p><b>📍 Address:</b> 26 Watkins Avenue, Oneonta</p>
+    <p><b>📍 Address:</b> 26 Watkins Avenue, Oneonta, NY, 13820</p>
     <p><b>📧 Email:</b> contactluigi@yahoo.com</p>
     </div>
     """, unsafe_allow_html=True)
