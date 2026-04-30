@@ -293,7 +293,24 @@ elif st.session_state.page == "Shop":
     """, unsafe_allow_html=True)
 
     if st.button(f"Checkout - ${shop_total:.2f}", key="shop_checkout"):
-        st.success(f"Checkout started. Final total: ${shop_total:.2f}")
+    order_data = {
+        "items": st.session_state.cart,
+        "total": shop_total
+    }
+
+    res = requests.post(
+        f"{SUPABASE_URL}/rest/v1/orders",
+        headers=headers,
+        json=order_data
+    )
+
+    if res.status_code == 201:
+        st.success(f"Order saved! Final total: ${shop_total:.2f}")
+        st.session_state.cart = {}
+        st.rerun()
+    else:
+        st.error("Order failed to save.")
+        st.write(res.text)
 
 
 elif st.session_state.page == "Contact":
