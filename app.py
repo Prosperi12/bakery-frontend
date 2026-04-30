@@ -266,7 +266,7 @@ elif st.session_state.page == "Shop":
         </div>
         """, unsafe_allow_html=True)
 
-        minus_col, qty_col, plus_col, add_col = st.columns([1,1,1,2])
+        minus_col, qty_col, plus_col = st.columns([1,1,1])
 
         with minus_col:
             if st.button("−", key=f"shop_minus_{name}"):
@@ -281,10 +281,17 @@ elif st.session_state.page == "Shop":
                 add_to_cart(name)
                 st.rerun()
 
-        with add_col:
-            if st.button(f"Add {name}", key=f"shop_add_{name}"):
-                add_to_cart(name)
-                st.success(f"{name} added to cart!")
+        shop_total = sum(product_prices[item] * qty for item, qty in st.session_state.cart.items())
+
+st.markdown(f"""
+<div class="card">
+    <h2>Checkout Total</h2>
+    <p class="price">${shop_total:.2f}</p>
+</div>
+""", unsafe_allow_html=True)
+
+if st.button(f"Checkout - ${shop_total:.2f}", key="shop_checkout"):
+    st.success(f"Checkout started. Final total: ${shop_total:.2f}")
 
 elif st.session_state.page == "Contact":
     st.markdown('<div class="section-title">Contact Us</div>', unsafe_allow_html=True)
