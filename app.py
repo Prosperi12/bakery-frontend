@@ -1,8 +1,11 @@
 import streamlit as st
 import requests
+from supabase import create_client
 
 SUPABASE_URL = "https://mpgpvcutkibcdhsrbzxh.supabase.co"
 SUPABASE_KEY = "sb_publishable_hJXHy_q1nuntSvyQa8lAiQ_zux_SwWi"
+
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 headers = {
     "apikey": SUPABASE_KEY,
@@ -293,16 +296,16 @@ elif st.session_state.page == "Shop":
     """, unsafe_allow_html=True)
 
     if st.button(f"Checkout - ${shop_total:.2f}", key="shop_checkout"):
-    order_data = {
+        order_data = {
         "items": st.session_state.cart,
         "total": shop_total
-    }
+        }
 
-    res = requests.post(
+        res = requests.post(
         f"{SUPABASE_URL}/rest/v1/orders",
         headers=headers,
         json=order_data
-    )
+        )
 
     if res.status_code == 201:
         st.success(f"Order saved! Final total: ${shop_total:.2f}")
