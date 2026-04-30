@@ -281,17 +281,21 @@ elif st.session_state.page == "Shop":
                 add_to_cart(name)
                 st.rerun()
 
-        shop_total = sum(product_prices[item] * qty for item, qty in st.session_state.cart.items())
+           shop_total = 0
+    for cart_item, cart_qty in st.session_state.cart.items():
+        shop_total += product_prices[cart_item] * cart_qty
 
-st.markdown(f"""
-<div class="card">
-    <h2>Checkout Total</h2>
-    <p class="price">${shop_total:.2f}</p>
-</div>
-""", unsafe_allow_html=True)
+    st.markdown(f"""
+    <div class="card">
+        <h2>Checkout Total</h2>
+        <p class="price">${shop_total:.2f}</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-if st.button(f"Checkout - ${shop_total:.2f}", key="shop_checkout"):
-    st.success(f"Checkout started. Final total: ${shop_total:.2f}")
+    if st.button(f"Checkout - ${shop_total:.2f}", key="shop_checkout"):
+        st.success(f"Checkout started. Final total: ${shop_total:.2f}")
+
+
 elif st.session_state.page == "Contact":
     st.markdown('<div class="section-title">Contact Us</div>', unsafe_allow_html=True)
     st.write("Lynbrook, NY")
