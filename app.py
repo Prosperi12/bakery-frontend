@@ -298,6 +298,35 @@ elif st.session_state.page == "Shop":
 
 elif st.session_state.page == "Contact":
     st.markdown('<div class="section-title">Contact Us</div>', unsafe_allow_html=True)
-    st.write("Lynbrook, NY")
-    st.write("Phone coming soon")
-    st.write("Email coming soon")
+
+    col1, col2 = st.columns([2,1])
+
+    with col1:
+        st.markdown("""
+        <div class="card">
+            <h3>Leave Us a Message</h3>
+            <input placeholder="First Name" style="width:48%; padding:10px; margin:5px;" />
+            <input placeholder="Last Name" style="width:48%; padding:10px; margin:5px;" /><br>
+            <input placeholder="Phone" style="width:48%; padding:10px; margin:5px;" />
+            <input placeholder="Email" style="width:48%; padding:10px; margin:5px;" /><br>
+            <input placeholder="Subject" style="width:98%; padding:10px; margin:5px;" />
+            <textarea placeholder="Message" style="width:98%; padding:10px; margin:5px; height:120px;"></textarea><br>
+            <button style="background:#f4a300; color:white; padding:12px 25px; border:none; border-radius:6px; font-weight:bold;">SEND MESSAGE</button>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
+        <div class="card">
+            <h3>... OR CONTACT US DIRECTLY</h3>
+            <p>If you have any questions, feel free to reach out.</p>
+            <p>We’ll get back to you as soon as possible.</p>
+
+            <p>Luigi’s Bakery is dedicated to making your experience smooth and simple. 
+            Whether you're ordering desserts or planning something special, we're here to help.</p>
+
+            <p><b>📞 Phone:</b> 493-489-2933</p>
+            <p><b>📍 Address:</b> 26 Watkins Avenue, Oneonta</p>
+            <p><b>📧 Email:</b> contactluigi@yahoo.com</p>
+        </div>
+        """, unsafe_allow_html=True)
