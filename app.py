@@ -281,7 +281,7 @@ elif st.session_state.page == "Shop":
                 add_to_cart(name)
                 st.rerun()
 
-           shop_total = 0
+    shop_total = 0
     for cart_item, cart_qty in st.session_state.cart.items():
         shop_total += product_prices[cart_item] * cart_qty
 
