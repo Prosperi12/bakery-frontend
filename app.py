@@ -286,12 +286,12 @@ elif st.session_state.page == "Shop":
 st.markdown(f"""
 <div class="card">
     <h2>Checkout Total</h2>
-    <p class="price">${shop_total:.2f}</p>
+    <p class="price">${total:.2f}</p>
 </div>
 """, unsafe_allow_html=True)
 
-if st.button(f"Checkout - ${shop_total:.2f}", key="shop_checkout"):
-    st.success(f"Checkout started. Final total: ${shop_total:.2f}")
+if st.button(f"Checkout - ${total:.2f}", key="shop_checkout"):
+    st.success(f"Checkout started. Final total: ${total:.2f}")
 
 elif st.session_state.page == "Contact":
     st.markdown('<div class="section-title">Contact Us</div>', unsafe_allow_html=True)
