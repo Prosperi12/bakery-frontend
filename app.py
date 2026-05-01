@@ -15,7 +15,6 @@ headers = {
 
 st.set_page_config(page_title="Luigi's Italian Bakery", page_icon="🇮🇹", layout="wide")
 
-# ── Session state ──────────────────────────────────────────────────────────────
 if "page" not in st.session_state:
     st.session_state.page = "Home"
 if "cart" not in st.session_state:
@@ -75,18 +74,15 @@ product_descriptions = {
 
 cart_count = sum(st.session_state.cart.values())
 
-# ── Global CSS ─────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Lato:wght@300;400;700&display=swap');
 
-/* ── Base ── */
 .stApp {
     background: #fdf6ee;
     font-family: 'Lato', sans-serif;
 }
 
-/* ── Navbar ── */
 div[data-testid="stHorizontalBlock"] > div > div > button {
     background: transparent !important;
     border: none !important;
@@ -107,7 +103,6 @@ div[data-testid="stHorizontalBlock"] > div > div > button:hover {
     background: transparent !important;
 }
 
-/* ── Divider bar under nav ── */
 .nav-divider {
     height: 2px;
     background: linear-gradient(90deg, #b5451b, #e8a45a, #b5451b);
@@ -115,7 +110,6 @@ div[data-testid="stHorizontalBlock"] > div > div > button:hover {
     margin: 0 0 32px 0;
 }
 
-/* ── Section title ── */
 .section-title {
     font-family: 'Playfair Display', serif;
     font-size: 38px;
@@ -132,7 +126,6 @@ div[data-testid="stHorizontalBlock"] > div > div > button:hover {
     margin-bottom: 28px;
 }
 
-/* ── Product cards ── */
 .card {
     background: #ffffff;
     padding: 24px 26px;
@@ -185,7 +178,6 @@ div[data-testid="stHorizontalBlock"] > div > div > button:hover {
     border: 1px solid #e8c9aa;
 }
 
-/* ── Checkout / total card ── */
 .total-card {
     background: linear-gradient(135deg, #2c1304 0%, #5c2a0e 100%);
     padding: 28px 30px;
@@ -203,15 +195,6 @@ div[data-testid="stHorizontalBlock"] > div > div > button:hover {
     font-size: 32px !important;
 }
 
-/* ── Hero ── */
-.hero-wrapper {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 48px;
-}
-
-/* ── Footer / hours ── */
 .footer-box {
     background: linear-gradient(135deg, #2c1304 0%, #5c2a0e 100%);
     padding: 52px 40px;
@@ -239,7 +222,6 @@ div[data-testid="stHorizontalBlock"] > div > div > button:hover {
     border-radius: 2px;
 }
 
-/* ── Contact ── */
 .contact-detail {
     display: flex;
     align-items: flex-start;
@@ -248,10 +230,7 @@ div[data-testid="stHorizontalBlock"] > div > div > button:hover {
     border-bottom: 1px solid #f0e4d4;
 }
 .contact-detail:last-child { border-bottom: none; }
-.contact-icon {
-    font-size: 20px;
-    margin-top: 2px;
-}
+.contact-icon { font-size: 20px; margin-top: 2px; }
 .contact-label {
     font-size: 11px;
     font-weight: 700;
@@ -260,12 +239,8 @@ div[data-testid="stHorizontalBlock"] > div > div > button:hover {
     color: #b5451b;
     margin-bottom: 2px;
 }
-.contact-value {
-    font-size: 15px;
-    color: #3b2010;
-}
+.contact-value { font-size: 15px; color: #3b2010; }
 
-/* ── Streamlit button overrides ── */
 .stButton > button {
     background: #b5451b !important;
     color: white !important;
@@ -282,17 +257,6 @@ div[data-testid="stHorizontalBlock"] > div > div > button:hover {
     background: #912f0e !important;
 }
 
-/* ── Cart qty controls ── */
-.qty-minus button, .qty-plus button {
-    background: #f5ede4 !important;
-    color: #3b2010 !important;
-    font-size: 18px !important;
-    padding: 6px 14px !important;
-    border-radius: 8px !important;
-}
-.qty-minus button:hover { background: #e8d5c2 !important; }
-
-/* ── Empty cart ── */
 .empty-cart {
     text-align: center;
     padding: 60px 20px;
@@ -304,7 +268,6 @@ div[data-testid="stHorizontalBlock"] > div > div > button:hover {
 </style>
 """, unsafe_allow_html=True)
 
-# ── Navigation bar ─────────────────────────────────────────────────────────────
 c1, c2, c3, c_space, c5, c6 = st.columns([1, 1, 1, 4, 1, 1])
 with c1:
     if st.button("Home"):
@@ -324,9 +287,6 @@ with c6:
 
 st.markdown('<div class="nav-divider"></div>', unsafe_allow_html=True)
 
-# ══════════════════════════════════════════════════════════════════════════════
-# HOME
-# ══════════════════════════════════════════════════════════════════════════════
 if st.session_state.page == "Home":
 
     st.markdown("""
@@ -362,7 +322,6 @@ if st.session_state.page == "Home":
     </div>
     """, unsafe_allow_html=True)
 
-    # ── Featured section ──
     st.markdown('<div class="section-title">Featured Favorites</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-subtitle">A selection of our most beloved classics, baked fresh daily.</div>', unsafe_allow_html=True)
 
@@ -393,7 +352,6 @@ if st.session_state.page == "Home":
                         add_to_cart(name)
                         st.success(f"✓ {name} added to your cart!")
 
-    # ── Story strip ──
     st.markdown("""
     <div style='
         background: #fff;
@@ -401,30 +359,25 @@ if st.session_state.page == "Home":
         padding: 48px 52px;
         margin-top: 48px;
         box-shadow: 0 4px 20px rgba(60,20,0,0.07);
-        display: flex;
-        gap: 20px;
     '>
-        <div>
-            <p style="font-family:'Lato',sans-serif;font-size:11px;letter-spacing:3px;
-                      text-transform:uppercase;color:#b5451b;font-weight:700;margin:0 0 10px;">
-                Our Story
-            </p>
-            <h2 style="font-family:'Playfair Display',serif;font-size:30px;
-                       color:#2c1304;margin:0 0 14px;">
-                Made the Old-World Way
-            </h2>
-            <p style="font-family:'Lato',sans-serif;font-size:15px;color:#6b4b33;
-                      line-height:1.75;max-width:680px;margin:0;">
-                Every item in our bakery follows recipes passed down through generations.
-                We use no shortcuts — just quality ingredients, patient hands, and a wood-fired
-                oven that's been the heart of our shop since the day we opened.
-                Come in, take your time, and taste the difference tradition makes.
-            </p>
-        </div>
+        <p style="font-family:'Lato',sans-serif;font-size:11px;letter-spacing:3px;
+                  text-transform:uppercase;color:#b5451b;font-weight:700;margin:0 0 10px;">
+            Our Story
+        </p>
+        <h2 style="font-family:'Playfair Display',serif;font-size:30px;
+                   color:#2c1304;margin:0 0 14px;">
+            Made the Old-World Way
+        </h2>
+        <p style="font-family:'Lato',sans-serif;font-size:15px;color:#6b4b33;
+                  line-height:1.75;max-width:680px;margin:0;">
+            Every item in our bakery follows recipes passed down through generations.
+            We use no shortcuts — just quality ingredients, patient hands, and a wood-fired
+            oven that's been the heart of our shop since the day we opened.
+            Come in, take your time, and taste the difference tradition makes.
+        </p>
     </div>
     """, unsafe_allow_html=True)
 
-    # ── Footer ──
     st.markdown("""
     <div class="footer-box">
         <h3>Visit Us</h3>
@@ -437,16 +390,11 @@ if st.session_state.page == "Home":
     </div>
     """, unsafe_allow_html=True)
 
-# ══════════════════════════════════════════════════════════════════════════════
-# SHOP
-# ══════════════════════════════════════════════════════════════════════════════
 elif st.session_state.page == "Shop":
     st.markdown('<div class="section-title">Our Bakery</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-subtitle">Everything baked on-site, every single morning.</div>', unsafe_allow_html=True)
 
-    shop_items = list(product_prices.keys())
-
-    for name in shop_items:
+    for name in list(product_prices.keys()):
         qty = st.session_state.cart.get(name, 0)
         st.markdown(f"""
         <div class="card">
@@ -454,9 +402,7 @@ elif st.session_state.page == "Shop":
             <p>{product_descriptions.get(name, "")}</p>
             <p class="price">${product_prices[name]:.2f}
                 <span style="font-family:'Lato',sans-serif;font-size:13px;
-                             color:#9b7a60;font-weight:400;margin-left:10px;">
-                    per piece
-                </span>
+                             color:#9b7a60;font-weight:400;margin-left:10px;">per piece</span>
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -469,9 +415,8 @@ elif st.session_state.page == "Shop":
         with qty_col:
             st.markdown(f"""
             <div style="text-align:center;font-family:'Playfair Display',serif;
-                        font-size:22px;color:#2c1304;padding-top:6px;">
-                {qty}
-            </div>""", unsafe_allow_html=True)
+                        font-size:22px;color:#2c1304;padding-top:6px;">{qty}</div>""",
+                        unsafe_allow_html=True)
         with plus_col:
             if st.button("+", key=f"shop_plus_{name}"):
                 add_to_cart(name)
@@ -491,11 +436,7 @@ elif st.session_state.page == "Shop":
             st.warning("Your cart is empty — add some items first!")
         else:
             order_data = {"items": st.session_state.cart, "total": shop_total}
-            res = requests.post(
-                f"{SUPABASE_URL}/rest/v1/orders",
-                headers=headers,
-                json=order_data
-            )
+            res = requests.post(f"{SUPABASE_URL}/rest/v1/orders", headers=headers, json=order_data)
             if res.status_code == 201:
                 st.success(f"🎉 Order placed! Thank you. Total: ${shop_total:.2f}")
                 st.session_state.cart = {}
@@ -503,9 +444,6 @@ elif st.session_state.page == "Shop":
             else:
                 st.error(f"Something went wrong saving your order (status {res.status_code}). Please try again.")
 
-# ══════════════════════════════════════════════════════════════════════════════
-# CART
-# ══════════════════════════════════════════════════════════════════════════════
 elif st.session_state.page == "Cart":
     st.markdown('<div class="section-title">Your Cart</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-subtitle">Review your selections before checkout.</div>', unsafe_allow_html=True)
@@ -542,9 +480,8 @@ elif st.session_state.page == "Cart":
             with qty_col:
                 st.markdown(f"""
                 <div style="text-align:center;font-family:'Playfair Display',serif;
-                            font-size:22px;color:#2c1304;padding-top:6px;">
-                    {qty}
-                </div>""", unsafe_allow_html=True)
+                            font-size:22px;color:#2c1304;padding-top:6px;">{qty}</div>""",
+                            unsafe_allow_html=True)
             with plus_col:
                 if st.button("+", key=f"cart_plus_{item}"):
                     add_to_cart(item)
@@ -559,11 +496,7 @@ elif st.session_state.page == "Cart":
 
         if st.button(f"Checkout  →  ${total:.2f}"):
             order_data = {"items": st.session_state.cart, "total": total}
-            res = requests.post(
-                f"{SUPABASE_URL}/rest/v1/orders",
-                headers=headers,
-                json=order_data
-            )
+            res = requests.post(f"{SUPABASE_URL}/rest/v1/orders", headers=headers, json=order_data)
             if res.status_code == 201:
                 st.success(f"🎉 Order placed! Thank you. Total: ${total:.2f}")
                 st.session_state.cart = {}
@@ -571,9 +504,6 @@ elif st.session_state.page == "Cart":
             else:
                 st.error(f"Something went wrong saving your order (status {res.status_code}). Please try again.")
 
-# ══════════════════════════════════════════════════════════════════════════════
-# SEARCH
-# ══════════════════════════════════════════════════════════════════════════════
 elif st.session_state.page == "Search":
     st.markdown('<div class="section-title">Search</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-subtitle">Looking for something specific? Find it here.</div>',
@@ -600,9 +530,6 @@ elif st.session_state.page == "Search":
             add_to_cart(r)
             st.success(f"✓ {r} added to your cart!")
 
-# ══════════════════════════════════════════════════════════════════════════════
-# CONTACT
-# ══════════════════════════════════════════════════════════════════════════════
 elif st.session_state.page == "Contact":
     st.markdown('<div class="section-title">Get in Touch</div>', unsafe_allow_html=True)
     st.markdown('<div class="section-subtitle">We love hearing from our customers. Say hello!</div>',
@@ -656,7 +583,6 @@ elif st.session_state.page == "Contact":
                        color:#2c1304;margin:0 0 22px;">
                 Luigi's Italian Bakery
             </h3>
-
             <div class="contact-detail">
                 <div class="contact-icon">📍</div>
                 <div>
@@ -664,7 +590,6 @@ elif st.session_state.page == "Contact":
                     <div class="contact-value">26 Watkins Avenue<br>Oneonta, NY 13820</div>
                 </div>
             </div>
-
             <div class="contact-detail">
                 <div class="contact-icon">📞</div>
                 <div>
@@ -672,7 +597,6 @@ elif st.session_state.page == "Contact":
                     <div class="contact-value">(493) 489-2933</div>
                 </div>
             </div>
-
             <div class="contact-detail">
                 <div class="contact-icon">📧</div>
                 <div>
@@ -680,7 +604,6 @@ elif st.session_state.page == "Contact":
                     <div class="contact-value">contactluigi@yahoo.com</div>
                 </div>
             </div>
-
             <div class="contact-detail">
                 <div class="contact-icon">🕐</div>
                 <div>
