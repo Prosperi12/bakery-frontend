@@ -296,16 +296,9 @@ elif st.session_state.page == "Shop":
     """, unsafe_allow_html=True)
 
     if st.button(f"Checkout - ${shop_total:.2f}", key="shop_checkout"):
-
         order_data = {
-        "customer_name": "Walk-in",
-        "phone": "",
-        "email": "",
-        "pickup_time": "",
-        "notes": "",
         "items": st.session_state.cart,
-        "total": shop_total,
-        "status": "pending"
+        "total": shop_total
         }
 
         res = requests.post(
@@ -314,13 +307,13 @@ elif st.session_state.page == "Shop":
         json=order_data
         )
 
+        st.write(res.status_code)
+        st.write(res.text)
+
     if res.status_code == 201:
         st.success(f"Order saved! Final total: ${shop_total:.2f}")
-        st.session_state.cart = {}
-        st.rerun()
     else:
         st.error("Order failed to save.")
-        st.write(res.text)
 
 elif st.session_state.page == "Contact":
     st.markdown('<div class="section-title">Contact Us</div>', unsafe_allow_html=True)
